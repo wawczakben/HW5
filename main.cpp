@@ -4,6 +4,9 @@ using namespace std;
 #define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
 
+#include "Card.h"
+#include "Deck.h"
+
 int main()
 {
 	cout << "Hello World!!!" << endl;
@@ -32,7 +35,7 @@ TEST_CASE("Test Cards")
 	SECTION("Test create 52 cards")
 	{
 		string suits[] = {"Clubs", "Diamonds", "Hearts", "Spades"};
-		for (int i = 0; i < 4; i++)			
+		for (int i = 0; i < 4; i++)
 		{
 			for (int num = 2; num <= 14; num++)
 			{
@@ -40,9 +43,9 @@ TEST_CASE("Test Cards")
 				REQUIRE(c.getNumericValue() == num);
 				REQUIRE(c.getSuit() == suits[i]);
 			}
-		}		
-	}  
-     
+		}
+	}
+
 	SECTION("Test toString()")
 	{
 		Card c1(3, "Diamonds");
@@ -53,4 +56,24 @@ TEST_CASE("Test Cards")
 		REQUIRE(c2.toString() == "10 of Hearts");
 		REQUIRE(c3.toString() == "Ace of Spades");
 	}
+}
+
+TEST_CASE("Test Desk")
+{
+    SECTION("Test unique")
+    {
+        Deck d;
+
+        REQUIRE(d.size() == 52);
+
+        for(int i = 0; i < d.size(); i++)
+        {
+            for (int j = i+1; j < d.size(); j++)
+            {
+                REQUIRE(((d[i].getNumericValue() != d[j].getNumericValue())
+                    || (d[i].getSuit() != d[j].getSuit())));
+            }
+        }
+
+    }
 }
