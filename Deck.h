@@ -11,6 +11,8 @@ public:
     Deck();
     int size();
     Card operator[](int i);
+    void shuffle();
+    vector<Card> deal(int numOfCards);
 
 
 private:

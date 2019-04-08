@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-	cout << "Hello World!!!" << endl;
+	//cout << "Hello World!!!" << endl;
 
     Catch::Session().run();
 
@@ -58,7 +58,7 @@ TEST_CASE("Test Cards")
 	}
 }
 
-TEST_CASE("Test Desk")
+TEST_CASE("Test Deck")
 {
     SECTION("Test unique")
     {
@@ -74,6 +74,68 @@ TEST_CASE("Test Desk")
                     || (d[i].getSuit() != d[j].getSuit())));
             }
         }
-
     }
+
+	SECTION("Test shuffle")
+	{
+		bool first_card_different = false;
+		bool last_card_different = false;
+
+		for (int i = 0; i < 3; i++)
+		{
+			Deck d;
+			d.shuffle();
+			if (d[0].getNumericValue() != 2 || d[0].getSuit() != "Spades")
+			{
+				first_card_different = true;
+			}
+			if (d[51].getNumericValue() != 14 || d[51].getSuit() != "Clubs")
+			{
+				last_card_different = true;
+			}
+		}
+		
+		REQUIRE(first_card_different);
+		REQUIRE(last_card_different);
+
+		first_card_different = false;
+		last_card_different = false;
+		Deck reference;
+		reference.shuffle();
+		for (int i = 0; i < 3; i++)
+		{
+			Deck d;
+			d.shuffle();
+			if (d[0].getNumericValue() != reference[0].getNumericValue() || d[0].getSuit() != reference[0].getSuit())
+			{
+				first_card_different = true;
+			}
+			if (d[51].getNumericValue() != reference[51].getNumericValue() || d[51].getSuit() != reference[51].getSuit())
+			{
+				last_card_different = true;
+			}
+		}
+
+		REQUIRE(first_card_different);
+		REQUIRE(last_card_different);
+
+	}
+
+	SECTION("Test deal")
+	{
+		Deck d;
+		vector<Card> deal = d.deal(3);
+		REQUIRE(d.size() == 49);
+		REQUIRE(deal.size() == 3);
+		REQUIRE((deal[0].getNumericValue() == 14 && deal[0].getSuit() == "Clubs"));
+		REQUIRE_THROWS(d.deal(50));
+
+		Deck e;
+		e.shuffle();
+		Card c = e.deal(1)[0];
+		for (int i = 0; i < 51; i++)
+		{
+			REQUIRE((c.getNumericValue() != e[i].getNumericValue() || c.getSuit() != e[i].getSuit()));
+		}
+	}
 }

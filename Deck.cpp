@@ -1,4 +1,8 @@
+#include <vector>
+#include <algorithm>
 #include "Deck.h"
+
+using namespace std;
 
 Deck::Deck()
 {
@@ -26,4 +30,24 @@ int Deck::size()
 Card Deck::operator [] (int i)
 {
     return deck[i];
+}
+
+void Deck::shuffle()
+{
+    random_shuffle(deck.begin(), deck.end());
+}
+
+vector<Card> Deck::deal(int num)
+{
+    vector<Card> retval;
+    if (num > deck.size())
+    {
+        throw "Drew too many cards.";
+    }
+    for (int i = 0; i < num; i++)
+    {
+        retval.push_back(deck.back());
+        deck.pop_back();
+    }
+    return retval;
 }
