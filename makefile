@@ -1,6 +1,6 @@
-OBJS	= main.o Card.o Deck.o
-SOURCE	= main.cpp Card.cpp Deck.cpp
-HEADER	= catch.hpp Card.h Deck.h
+OBJS	= main.o Card.o Deck.o PokerEvaluator.o
+SOURCE	= main.cpp Card.cpp Deck.cpp PokerEvaluator.cpp
+HEADER	= catch.hpp Card.h Deck.h PokerEvaluator.h
 OUT	= a.out
 CC	 = g++
 FLAGS	 = -g -c -Wall -std=c++17

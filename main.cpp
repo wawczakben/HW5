@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <string>
 using namespace std;
 
 #define CATCH_CONFIG_RUNNER
@@ -6,6 +8,7 @@ using namespace std;
 
 #include "Card.h"
 #include "Deck.h"
+#include "PokerEvaluator.h"
 
 int main()
 {
@@ -137,5 +140,46 @@ TEST_CASE("Test Deck")
 		{
 			REQUIRE((c.getNumericValue() != e[i].getNumericValue() || c.getSuit() != e[i].getSuit()));
 		}
+	}
+}
+
+TEST_CASE("Test PokerEvaluator")
+{
+	SECTION("Test royal flush")
+	{
+		vector<Card> cards;
+		cards.push_back(Card(8, "Spades"));
+		cards.push_back(Card(9, "Spades"));
+		cards.push_back(Card(10, "Spades"));
+		cards.push_back(Card(11, "Spades"));
+		cards.push_back(Card(12, "Spades"));
+		cards.push_back(Card(13, "Spades"));
+		cards.push_back(Card(14, "Spades"));
+		PokerEvaluator p(cards);
+		REQUIRE(p.best_hand() ==
+			"10 of Spades\n"
+			"Jack of Spades\n"
+			"Queen of Spades\n"
+			"King of Spades\n"
+			"Ace of Spades");
+	}
+
+	SECTION("Test pair");
+	{
+		vector<Card> cards;
+		cards.push_back(Card(2, "Clubs"));
+		cards.push_back(Card(3, "Diamonds"));
+		cards.push_back(Card(5, "Diamonds"));
+		cards.push_back(Card(6, "Spades"));
+		cards.push_back(Card(3, "Hearts"));
+		cards.push_back(Card(8, "Hearts"));
+		cards.push_back(Card(9, "Spades"));
+		PokerEvaluator p(cards);
+		REQUIRE(p.best_hand() ==
+			"3 of Diamonds\n"
+			"3 of Hearts\n"
+			"6 of Spades\n"
+			"8 of Hearts\n"
+			"9 of Spades\n");
 	}
 }
