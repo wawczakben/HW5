@@ -164,6 +164,64 @@ TEST_CASE("Test PokerEvaluator")
 			"Ace of Spades");
 	}
 
+	SECTION("Test straight flush")
+	{
+		vector<Card> cards;
+		cards.push_back(Card(3, "Spades"));
+		cards.push_back(Card(4, "Spades"));
+		cards.push_back(Card(6, "Spades"));
+		cards.push_back(Card(7, "Spades"));
+		cards.push_back(Card(8, "Spades"));
+		cards.push_back(Card(9, "Spades"));
+		cards.push_back(Card(10, "Spades"));
+		PokerEvaluator p(cards);
+		REQUIRE(p.best_hand() ==
+			"6 of Spades\n"
+			"7 of Spades\n"
+			"8 of Spades\n"
+			"9 of Spades\n"
+			"10 of Spades");
+	}
+
+	SECTION("four of a kind")
+	{
+		vector<Card> cards;
+		cards.push_back(Card(3, "Spades"));
+		cards.push_back(Card(3, "Diamonds"));
+		cards.push_back(Card(6, "Spades"));
+		cards.push_back(Card(3, "Hearts"));
+		cards.push_back(Card(8, "Spades"));
+		cards.push_back(Card(3, "Clubs"));
+		cards.push_back(Card(10, "Spades"));
+		PokerEvaluator p(cards);
+		REQUIRE(p.best_hand() ==
+			"3 of Clubs\n"
+			"3 of Diamonds\n"
+			"3 of Hearts\n"
+			"3 of Spades\n"
+			"10 of Spades");
+	}
+
+	SECTION("test full house")
+	{
+		vector<Card> cards;
+		cards.push_back(Card(5, "Spades"));
+		cards.push_back(Card(5, "Diamonds"));
+		cards.push_back(Card(5, "Hearts"));
+		cards.push_back(Card(11, "Hearts"));
+		cards.push_back(Card(11, "Spades"));
+		cards.push_back(Card(3, "Clubs"));
+		cards.push_back(Card(10, "Spades"));
+		PokerEvaluator p(cards);
+		REQUIRE(p.best_hand() ==
+			"5 of Diamonds\n"
+			"5 of Hearts\n"
+			"5 of Spades\n"
+			"Jack of Hearts\n"
+			"Jack of Spades");
+	}
+
+
 	SECTION("Test pair");
 	{
 		vector<Card> cards;
