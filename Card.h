@@ -7,6 +7,7 @@ class Card
 {
 public:
 	Card(int n, string s);
+	Card();
 	
 	string toString();
 

@@ -10,6 +10,12 @@ Card::Card(int n, string s)
 	setSuit(s);
 }
 //--
+Card::Card()
+{
+	cardNumber = 0;
+	setNumericValue(14);
+	setSuit("Spades");
+}
 string Card::toString()
 {
 	string retVal;
